@@ -359,14 +359,26 @@
 const input = document.body.appendChild(document.createElement('textarea'));
 const button = document.body.appendChild(document.createElement('button'));
 let wordsUpper;
-let number = 0;
 button.addEventListener('click', () => {
   let words = input.value.split('\n');
-  for (const word of words) {
-    number++;
-    let [first, second] = word.trim().split('_');
-    second = second.replace(second[0], second[0].toUpperCase());
-    wordsUpper = [first, second].join('');
-    console.log(wordsUpper.padEnd(20, ' ') + '✅'.repeat(number));
+
+  for (const [i, word] of words.entries()) {
+    let [first, second] = word.toLowerCase().trim().split('_');
+
+    // My solution
+    // second = second.replace(second[0], second[0].toUpperCase());
+    // wordsUpper = [first, second].join('');
+
+    // Teacher's solution:
+    const output = `${first}${second.replace(
+      second[0],
+      second[0].toUpperCase()
+    )} `;
+
+    // My solution
+    // console.log(output.padEnd(20, ' ') + '✅'.repeat(i + 1));
+
+    // Teacher's solution:
+    console.log(`${output.padEnd(20)}${'✅'.repeat(i + 1)}`);
   }
 });
