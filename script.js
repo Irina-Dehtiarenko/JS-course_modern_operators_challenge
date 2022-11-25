@@ -348,6 +348,7 @@
 // checkBaggage('Socks and camera');
 // checkBaggage('Got some snacks and a gun for protection');
 
+// ///////////////////
 // challenge 4
 
 // underscore_case
@@ -356,29 +357,68 @@
 // calculate_AGE
 //  delayed_departur
 
-const input = document.body.appendChild(document.createElement('textarea'));
-const button = document.body.appendChild(document.createElement('button'));
-let wordsUpper;
-button.addEventListener('click', () => {
-  let words = input.value.split('\n');
+// const input = document.body.appendChild(document.createElement('textarea'));
+// const button = document.body.appendChild(document.createElement('button'));
+// let wordsUpper;
+// button.addEventListener('click', () => {
+//   let words = input.value.split('\n');
 
-  for (const [i, word] of words.entries()) {
-    let [first, second] = word.toLowerCase().trim().split('_');
+//   for (const [i, word] of words.entries()) {
+//     let [first, second] = word.toLowerCase().trim().split('_');
 
-    // My solution
-    // second = second.replace(second[0], second[0].toUpperCase());
-    // wordsUpper = [first, second].join('');
+//     // My solution
+//     // second = second.replace(second[0], second[0].toUpperCase());
+//     // wordsUpper = [first, second].join('');
 
-    // Teacher's solution:
-    const output = `${first}${second.replace(
-      second[0],
-      second[0].toUpperCase()
-    )} `;
+//     // Teacher's solution:
+//     const output = `${first}${second.replace(
+//       second[0],
+//       second[0].toUpperCase()
+//     )} `;
 
-    // My solution
-    // console.log(output.padEnd(20, ' ') + '✅'.repeat(i + 1));
+//     // My solution
+//     // console.log(output.padEnd(20, ' ') + '✅'.repeat(i + 1));
 
-    // Teacher's solution:
-    console.log(`${output.padEnd(20)}${'✅'.repeat(i + 1)}`);
+//     // Teacher's solution:
+//     console.log(`${output.padEnd(20)}${'✅'.repeat(i + 1)}`);
+//   }
+// });
+
+///////////////////////////////////////
+// String Methods Practice
+
+const flights =
+  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+
+// 🔴 Delayed Departure from FAO to TXL (11h25)
+//              Arrival from BRU to FAO (11h45)
+//   🔴 Delayed Arrival from HEL to FAO (12h05)
+//            Departure from FAO to LIS (12h30)
+
+const fromTo = fromTo => {
+  return (fromTo = fromTo.slice(0, 3).toUpperCase());
+};
+
+const separator = string => {
+  const rows = string.split('+');
+
+  for (const row of rows) {
+    const words = row.split(';');
+    let [status, from, to, time] = words;
+
+    if (status.includes('Delayed')) {
+      status = `🔴 ${status.replace(/_/g, ' ')}`;
+    } else {
+      status = status.replace(/_/g, ' ');
+    }
+
+    from = fromTo(from);
+    to = fromTo(to);
+
+    time = time.replace(':', 'h');
+
+    console.log(`${status} from ${from} to ${to} (${time})`.padStart(45));
   }
-});
+};
+
+separator(flights);
